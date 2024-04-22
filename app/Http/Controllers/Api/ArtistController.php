@@ -9,7 +9,12 @@ use Illuminate\Support\Facades\Auth;
 class ArtistController extends Controller
 {
  
+    public function index()
+    {
+        $artists = Artist::all(); // Retrieve all songs with their associated artists
     
+        return response()->json(['data' => $artists], 200);
+    }
     public function store(Request $request)
     {
         $request->validate([
