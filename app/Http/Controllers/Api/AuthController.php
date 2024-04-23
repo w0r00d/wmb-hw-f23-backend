@@ -24,7 +24,9 @@ class AuthController extends Controller
             $parts = explode('|', $token);
             return response()->json(['token' => $parts[1]], 200);
         }
-
+        else{
+            return response()->json(['message' => 'unauthenticated'], 401);
+        }
         throw ValidationException::withMessages([
             'username' => ['The provided credentials are incorrect.'],
         ]);
