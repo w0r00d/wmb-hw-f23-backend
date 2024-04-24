@@ -3,26 +3,36 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Song;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class SongController extends Controller
 {
     //
     public function index()
-{
-    $songs = Song::with('artist')->get(); // Retrieve all songs with their associated artists
+    {
+        $songs = Song::with('artist')->get(); // Retrieve all songs with their associated artists
 
-    return response()->json(['data' => $songs], 200);
-}
+        return response()->json(['data' => $songs], 200);
+    }
     public function store(Request $request)
     {
-        $request->validate([
-            'title' => 'required',
-            'type' => 'required',
-            'price' => 'required|numeric',
-            'ArtistId' => 'required|exists:artists,id',
-        ]);
+      
+        $validator = Validator::make($request->all(),
+            [
+                'title' => 'required',
+                'type' => 'required',
+                'price' => 'required|numeric',
+                'ArtistId' => 'required|exists:artists,id',
+            ]);
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'validation error',
+                'errors' => $validator->errors(),
+
+            ], 400);
+        }
 
         // Create a new song
         $song = new Song();
