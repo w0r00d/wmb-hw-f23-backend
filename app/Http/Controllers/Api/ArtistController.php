@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Artist;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+
 class ArtistController extends Controller
 {
  
@@ -18,12 +20,22 @@ class ArtistController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+          
+        ]);
+        $validator = Validator::make($request->all(),
+        [
             'fname' => 'required',
             'lname' => 'required',
             'gender' => 'required',
             'country' => 'required',
         ]);
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'validation error',
+                'errors' => $validator->errors(),
 
+            ], 400);
+        }
         // Create a new artist
         $artist = new Artist();
         $artist->fname = $request->input('fname');
@@ -32,6 +44,6 @@ class ArtistController extends Controller
         $artist->country = $request->input('country');
         $artist->save();
 
-        return response()->json(['message' => 'Artist created successfully', 'data' => $artist],  201);
+        return response()->json(['message' => 'Artist created successfully', 'data' => $artist], 201);
     }
 }
