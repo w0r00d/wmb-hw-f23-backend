@@ -36,12 +36,12 @@ class CustomerController extends Controller
     {
         //
         $validatedRequest = $request->validate([
-            'username' =>'required',
+            'username' =>'required_min_length:5',
             'fname' =>'required',
             'lname' =>'required',
             'email' =>'required|email',
             'address' =>'required',
-            'password' =>'required',
+            'password' =>'required|min_length:6',
         ]);
 
         $costomer = Customer::create([
