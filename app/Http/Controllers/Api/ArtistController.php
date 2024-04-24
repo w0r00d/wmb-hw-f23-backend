@@ -13,7 +13,7 @@ class ArtistController extends Controller
  
     public function index()
     {
-        $artists = Artist::all(); // Retrieve all songs with their associated artists
+        $artists = Artist::with('songs')->get(); // Retrieve all songs with their associated artists
     
         return response()->json(['data' => $artists], 200);
     }
