@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Customer;
 use Illuminate\Support\Facades\Hash;
-
+use Illuminate\Contracts\Validation\Validator;
 class CustomerController extends Controller
 {
     /**
@@ -35,15 +35,20 @@ class CustomerController extends Controller
     public function store(Request $request)
     {
         //
-        $validatedRequest = $request->validate([
-            'username' =>'required|min:5',
+        $validatedRequest = Validator::make($request->all(),
+        [
+            'username' =>'required|min:6',
             'fname' =>'required',
             'lname' =>'required',
             'email' =>'required|email',
             'address' =>'required',
             'password' =>'required|min:6',
         ]);
-
+        if($validatedRequest->fails()){
+            return response()->json([
+                'status' => '200'
+            ]);
+        }
         $costomer = Customer::create([
             'username' => $request->username,
             'fname' =>$request->fname,
