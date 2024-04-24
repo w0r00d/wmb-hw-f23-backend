@@ -37,10 +37,10 @@ class CustomerController extends Controller
         //
         $validator = Validator::make($request->all(),
          [
-            'username' =>'required|',
+            'username' =>'required|unique',
             'fname' =>'required',
             'lname' =>'required',
-            'email' =>'required|email',
+            'email' =>'required|email|unique',
             'address' =>'required',
             'password' =>'required|min:6',
         ]);
@@ -48,8 +48,9 @@ class CustomerController extends Controller
         if($validator->fails()){
             return response()->json([
                 'message' => 'validation error',
-                'status' => '401'
-            ]);
+                'errors' => $validator->errors()
+                
+            ],400);
         }
         $costomer = Customer::create([
             'username' => $request->username,
