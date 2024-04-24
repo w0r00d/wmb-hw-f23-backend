@@ -35,7 +35,7 @@ class CustomerController extends Controller
     public function store(Request $request)
     {
         //
-        $validator = Validator::make($request->all,
+        $validator = Validator::make($request->all(),
          [
             'username' =>'required|',
             'fname' =>'required',
