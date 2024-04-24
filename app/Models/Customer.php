@@ -9,6 +9,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class Customer extends Authenticatable
 {    use HasApiTokens;
     use HasFactory;
+
+   protected $table = 'customers';
     protected $hidden = ['password', 'timestamps', 'email_verified_at','remember_token'];
     protected $fillable = ['username', 'fname', 'lname','address','email','password'];
 
