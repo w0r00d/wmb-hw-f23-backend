@@ -36,7 +36,7 @@ class CustomerController extends Controller
     {
         //
         $validatedRequest = $request->validate([
-            'username' =>'required_min_length:5',
+            'username' =>'required|min_length:5',
             'fname' =>'required',
             'lname' =>'required',
             'email' =>'required|email',
