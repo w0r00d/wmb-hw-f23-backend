@@ -22,7 +22,8 @@ class AuthController extends Controller
             $user = Auth::user();
             $token = $user->createToken('AuthToken')->plainTextToken;
             $parts = explode('|', $token);
-            return response()->json(['token' => $parts[1]], 200);
+            return response()->json(['token' => $parts[1],
+        'is_admin' =>$user->is_admin], 200);
         }
         else{
             return response()->json(['message' => 'unauthenticated'], 401);
