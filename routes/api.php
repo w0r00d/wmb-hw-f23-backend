@@ -17,3 +17,4 @@ Route::apiResource('customers',CustomerController::class );
 Route::post('/songs', [SongController::class, 'store']);
 Route::get('/songs', [SongController::class, 'index']);
 Route::get('/artists', [ArtistController::class, 'index']);
+Route::post('/artists', [ArtistController::class, 'store']);
