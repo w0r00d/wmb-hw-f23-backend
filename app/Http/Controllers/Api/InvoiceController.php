@@ -5,20 +5,29 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Invoice;
-
+use Illuminate\Support\Facades\Validator;
 class InvoiceController extends Controller
 {
     //
     
     public function store(Request $request)
     {
-        // Validate the request
-        $request->validate([
+        $validator = Validator::make($request->all(),
+        [
             'customer_id' => 'required|exists:customers,id',
             
             'total' => 'required|numeric',
             'credit_card' => 'required|string',
-        ]);
+        ]
+        );
+
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'validation error',
+                'errors' => $validator->errors(),
+
+            ], 400);
+        }
 
         // Create a new invoice
         $invoice = Invoice::create([
