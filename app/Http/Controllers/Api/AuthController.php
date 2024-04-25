@@ -4,10 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use App\Models\Customer;
-use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
@@ -23,9 +21,8 @@ class AuthController extends Controller
             $token = $user->createToken('AuthToken')->plainTextToken;
             $parts = explode('|', $token);
             return response()->json(['token' => $parts[1],
-        'is_admin' =>$user->is_admin], 200);
-        }
-        else{
+                'is_admin' => $user->is_admin], 200);
+        } else {
             return response()->json(['message' => 'unauthenticated'], 401);
         }
         throw ValidationException::withMessages([
