@@ -33,7 +33,7 @@ class InvoiceController extends Controller
 
     public function index()
     {
-        $invoices = Invoice::all();
+        $invoices = Invoice::with('orders')->get();
         return response()->json(['invoices' => $invoices], 200);
     }
 
